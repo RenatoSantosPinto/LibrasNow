@@ -1,0 +1,126 @@
+﻿@model LibrasNow.ViewModels.Modulo.ModuloCreateEditViewModel
+@section Scripts
+{
+    <script src="~/js/exercicio.js"></script>
+}
+@{
+    ViewData["Title"] = "Cadastro de Módulo";
+}
+
+<h2>Cadastrar Módulo</h2>
+
+<h4>Informe os dados do Módulo</h4>
+<hr />
+
+<form asp-action="Create" method="post" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Titulo" class="col-md-2 control-label">Título</label>
+        <div class="col-md-10">
+            <input asp-for="Titulo" maxlength="25" class="form-control" id="tituloTxt" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Explicacao" class="col-md-2 control-label">Explicação</label>
+        <div class="col-md-10">
+            <textarea asp-for="Explicacao" maxlength="1000" rows="9" class="form-control" id="explicacaoTxt"></textarea>
+        </div>
+    </div>
+    @*<div class="form-group">
+        <label asp-for="Imagem" class="col-md-2 control-label">Imagem</label>
+        <div class="col-md-2">
+            <input type="file" name="file" class="form-control-file" id="FormControlFileCreate">
+        </div>
+    </div>*@
+    <div class="form-group">
+        <label asp-for="Nivel" class="col-md-2 control-label">Nível</label>
+        <div class="col-md-1">
+            @if (Model.Nivel != 0)
+            {
+                <input asp-for="Nivel" min="1" class="form-control" id="nivelTxt" />
+            }
+            else
+            {
+                <input asp-for="Nivel" value="1" min="1" class="form-control" id="nivelTxt" />
+            }            
+        </div>
+        <label asp-for="QtdeExercicios" class="col-md-3 control-label">Quantidade de Exercícios</label>
+        <div class="col-md-1">
+            @if (Model.Nivel != 0)
+            {
+                <input asp-for="QtdeExercicios" min="1" class="form-control" id="qtdeExerciciosTxt" />
+            }
+            else
+            {
+                <input asp-for="QtdeExercicios" value="1" min="1" class="form-control" id="qtdeExerciciosTxt" />
+            }            
+        </div>      
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="table-bordered col-md-4 col-md-offset-2">
+            <label class="control-label">Exercícios do Módulo</label>
+            <br />
+            <br />
+            <div style="OVERFLOW-Y:scroll;height:400px">
+                <ol id="exerciciosModuloList"></ol>
+            </div>
+            <br />
+        </div>
+        <div class="table-bordered col-md-4 col-md-offset-1">
+            <label class="control-label">Exercícios Disponíveis</label>
+            <br />
+            <br />
+            <div style="OVERFLOW-Y:scroll;height:400px">
+                @if (Model.CodigosExerciciosModulo.Count() > 0)
+                {
+                    @foreach (var ex in Model.ExerciciosDisponiveis)
+                    {
+                        if (Model.CodigosExerciciosModulo.Contains(ex.CodExercicio))
+                        {
+                                <input onclick="adicionaExercicioModulo('@ex.Descricao')" class="checkbox-inline" style="text-align:center"
+                                       type="checkbox" checked="checked" name="CodigosExerciciosModulo" id="@ex.Descricao" value="@ex.CodExercicio" />@ex.Descricao
+                                    <br />
+                        }
+                        else
+                        {
+                            <input onclick="adicionaExercicioModulo('@ex.Descricao')" class="checkbox-inline" style="text-align:center"
+                                    type="checkbox" name="CodigosExerciciosModulo" id="@ex.Descricao" value="@ex.CodExercicio" />@ex.Descricao
+                                <br />
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    @foreach (var ex in Model.ExerciciosDisponiveis)
+                    {
+                        <input onclick="adicionaExercicioModulo('@ex.Descricao')" class="checkbox-inline" style="text-align:center"
+                               type="checkbox" name="CodigosExerciciosModulo" id="@ex.Descricao" value="@ex.CodExercicio" />@ex.Descricao
+                            <br />
+                    }
+
+                }                
+            </div>
+            <br />
+        </div>        
+    </div>
+    <hr />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Adicionar" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+
+</form>

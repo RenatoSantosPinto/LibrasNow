@@ -1,0 +1,66 @@
+﻿@model LibrasNow.Models.MaterialEstudo
+
+@{
+    ViewData["Title"] = "Exclusão de Material de Estudo";
+}
+
+
+<h2>Excluir Material de Estudo</h2>
+<h4>Deseja realmente excluir esse material de estudo?</h4>
+<br />
+
+<form asp-action="Delete" class="form-horizontal">
+
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <table class="table table-responsive">
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Título</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Titulo</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Descrição</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Descricao</span>
+            </td>
+        </tr>
+        @if (Model.Link != null)
+        {
+            <tr>
+                <td style="vertical-align:middle">
+                    <label class="col-md-1 control-label">Link</label>
+                </td>
+                <td class="col-md-11" style="vertical-align:middle">
+                    <span><a href="@Model.Link">@Model.Link</a></span>
+                </td>
+            </tr>
+        }
+    </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Excluir" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+            
+
+</form>
+
+
+
+
+
+
+

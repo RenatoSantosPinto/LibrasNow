@@ -1,0 +1,45 @@
+﻿@model LibrasNow.Models.Video
+
+@{
+    ViewData["Title"] = "Cadastro de Vídeo";
+}
+
+<h2>Cadastrar Vídeo</h2>
+
+<h4>Informe os dados do Vídeo</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data" asp-action="Create" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+    
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" maxlength="40" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="file" name="file" class="form-control-file" id="FormControlFileCreate">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Adicionar" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</form>
+
+
+

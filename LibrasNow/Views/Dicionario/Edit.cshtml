@@ -1,0 +1,75 @@
+﻿@model LibrasNow.ViewModels.Dicionario.TermoViewModel
+@section Scripts
+{
+    <script src="~/js/video.js"></script>
+}
+@{
+    ViewData["Title"] = "Alteração de Termo";
+}
+
+<h2>Alterar Termo</h2>
+
+<h4>Informe os dados do Termo</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data" asp-action="Edit" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" maxlength="40" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Explicacao" class="col-md-2 control-label">Explicação</label>
+        <div class="col-md-10">
+            <textarea asp-for="Explicacao" maxlength="1000" rows="9" class="form-control" id="explicacaoTxt"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo atual</label>                
+        <div class="col-md-5">
+            <label class="control-label">@Model.DescVideo</label>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            <video width="320" height="240" preload="metadata" controls="controls" id="videoAtualTag"
+                   src="/Video/ShowVideo/@Model.CodVideo">
+                @*<source id="webmSrc" src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">*@
+            </video>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo novo</label>
+        <div class="col-md-5">
+            <select asp-for="CodVideo" class="form-control" id="videoSelectTag" onchange="changeVideo()">
+                @foreach (var video in Model.Videos)
+                {
+                    <option value=@video.CodVideo>@video.Descricao</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            <video width="320" height="240" preload="metadata" controls="controls" id="videoNovoTag"
+                   src="/Video/ShowVideo/@Model.CodVideo">
+                @*<source id="webmSrc" src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">*@
+            </video>
+        </div>
+    </div>   
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Alterar" class="btn btn-info" />
+            <a asp-action="Delete" asp-route-id="@Model.CodTermo" class="btn btn-warning">Excluir</a>
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</form>
+

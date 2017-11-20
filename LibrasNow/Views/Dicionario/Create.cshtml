@@ -1,0 +1,67 @@
+﻿@model LibrasNow.ViewModels.Dicionario.TermoViewModel
+@section Scripts
+{
+    <script src="~/js/video.js"></script>
+}
+@{
+    ViewData["Title"] = "Cadastro de Termo";
+}
+
+<h2>Cadastrar Termo</h2>
+
+<h4>Informe os dados do Termo</h4>
+<hr />
+
+<form asp-action="Create" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Termo</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" maxlength="40" class="form-control" id="descricaoTxt" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Explicacao" class="col-md-2 control-label">Explicação</label>
+        <div class="col-md-10">
+            <textarea asp-for="Explicacao" maxlength="1000" rows="9" class="form-control" id="explicacaoTxt"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo</label>
+        <div class="col-md-5">
+            <select asp-for="CodVideo" class="form-control" id="videoSelectTag" onchange="changeVideo()">
+                @foreach (var video in Model.Videos)
+                {
+                    <option value=@video.CodVideo>@video.Descricao</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            <video width="320" height="240" preload="metadata" controls="controls" id="videoNovoTag"
+                   src="/Video/ShowVideo/@Model.CodVideo">
+                @*<source id="webmSrc" src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">*@
+            </video>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Adicionar" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+
+</form>
+
+
+
+

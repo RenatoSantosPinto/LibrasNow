@@ -1,0 +1,61 @@
+@model IEnumerable<LibrasNow.Models.MaterialEstudo>
+
+@{
+    ViewData["Title"] = "Materiais de Estudo";
+}
+
+<h2>Materiais de Estudo</h2>
+
+<p>
+    <a asp-action="Create">Cadastrar Material de Estudo</a>
+</p>
+
+@if (TempData["Mensagem"] != null)
+{
+    if (TempData["Sucesso"].Equals(true))
+    {
+        <div class="alert alert-success">
+            @TempData["Mensagem"]
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            @TempData["Mensagem"]
+        </div>
+    }
+}
+
+<table class="table table-responsive table-hover">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <h3>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </h3>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </p>
+                @if (item.Link != null)
+                {
+                    
+                        <p>
+                            Link: <a href="@Html.DisplayFor(modelItem => item.Link)">
+                                @Html.DisplayFor(modelItem => item.Link)
+                            </a>
+                        </p>
+                    
+                }
+            </td>
+            <td style="vertical-align:middle">
+                <a asp-action="Edit" asp-route-id="@item.CodMatEst">Alterar</a>
+            </td>
+            <td style="vertical-align:middle">
+                <a asp-action="Delete" asp-route-id="@item.CodMatEst">Excluir</a>
+            </td>
+        </tr>
+
+    }  
+</table>
+

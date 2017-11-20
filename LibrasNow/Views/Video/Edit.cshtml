@@ -1,0 +1,54 @@
+﻿@model LibrasNow.Models.Video
+
+@{
+    ViewData["Title"] = "Alteração de Vídeo";
+}
+
+<h2>Alterar Vídeo</h2>
+
+<h4>Informe os dados do Vídeo</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data" asp-action="Edit" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }     
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" maxlength="40" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo</label>
+        <div class="col-md-10">
+            <video width="320" height="240" preload="metadata" controls>
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/ogg">
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="file" name="file" class="form-control-file" id="FormControlFileEdit">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Alterar" class="btn btn-info" />
+            <a asp-action="Delete" asp-route-id="@Model.CodVideo" class="btn btn-warning">Excluir</a>
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</form>
+

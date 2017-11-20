@@ -1,0 +1,75 @@
+﻿@model LibrasNow.ViewModels.Exercicio.ExercicioViewModel
+
+@{
+    ViewData["Title"] = "Exclusão de Exercício";
+}
+
+<h2>Excluir Exercício</h2>
+
+<h4>Deseja realmente excluir esse exercício?</h4>
+<br />
+
+<form asp-action="Delete" class="form-horizontal">
+
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <table class="table table-responsive">
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Descrição</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Descricao</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Alternativas</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>1 - @Model.Alternativa1</span>
+                <br />
+                <span>2 - @Model.Alternativa2</span>
+                <br />
+                <span>3 - @Model.Alternativa3</span>
+                <br />
+                <span>4 - @Model.Alternativa4</span>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Resposta</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Resposta</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Vídeo</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <video width="320" height="240" preload="metadata" controls>
+                    <source src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">
+                    <source src="/Video/ShowVideo/@Model.CodVideo" type="video/ogg">
+                    <source src="/Video/ShowVideo/@Model.CodVideo" type="video/mp4">
+                </video>
+            </td>
+        </tr>
+    </table>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Excluir" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+</form>
+

@@ -1,0 +1,9 @@
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\bin\Debug\netcoreapp1.1\LibrasNow.deps.json
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\bin\Debug\netcoreapp1.1\LibrasNow.runtimeconfig.json
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\bin\Debug\netcoreapp1.1\LibrasNow.runtimeconfig.dev.json
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\bin\Debug\netcoreapp1.1\LibrasNow.dll
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\obj\Debug\netcoreapp1.1\LibrasNow.csprojResolveAssemblyReference.cache
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\obj\Debug\netcoreapp1.1\LibrasNow.AssemblyInfo.cs
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\bin\Debug\netcoreapp1.1\LibrasNow.pdb
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\obj\Debug\netcoreapp1.1\LibrasNow.dll
+c:\users\renato\documents\visual studio 2017\Projects\LibrasNow\LibrasNow\obj\Debug\netcoreapp1.1\LibrasNow.pdb

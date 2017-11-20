@@ -1,0 +1,66 @@
+﻿@model LibrasNow.Models.Video
+
+@{
+    ViewData["Title"] = "Detalhes de Vídeo";
+}
+
+<h2>Detalhes do Vídeo</h2>
+
+<h4>Detalhes do Vídeo</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data" asp-action="Edit" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (ViewBag.Feedback == "RepeatedDescription")
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>Já existe um vídeo com essa descrição!</li></ul>
+        </div>
+    }
+    else if (ViewBag.Feedback == "EditException")
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>Erro ao alterar vídeo!</li></ul>
+        </div>
+    }
+    else if (ViewBag.Feedback == "WrongType")
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>Arquivo enviado não é um vídeo!</li></ul>
+        </div>
+    }
+
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo</label>
+        <div class="col-md-10">
+            <video width="320" height="240" preload="metadata" controls>
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/ogg">
+                <source src="/Video/ShowVideo/@Model.CodVideo" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Alterar" class="btn btn-info" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</form>
+

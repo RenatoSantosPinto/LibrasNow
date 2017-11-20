@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LibrasNow.Models.Exercicio>
+
+@{
+    ViewData["Title"] = "Exercício";
+}
+
+<h2>Exercícios</h2>
+
+<p>
+    <a asp-action="Create">Cadastrar Exercício</a>
+</p>
+
+<hr />
+
+<div class="container">
+    @if (TempData["Mensagem"] != null)
+    {
+        if (TempData["Sucesso"].Equals(true))
+        {
+            <div class="alert alert-success">
+                @TempData["Mensagem"]
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                @TempData["Mensagem"]
+            </div>
+        }
+    }
+</div>
+
+<div class="container">
+
+    @foreach (var item in Model)
+    {
+        <a class="col-xs-12 col-sm-6 col-md-4 col-lg-4 btn btn-primary" asp-action="Edit"
+           asp-route-id="@item.CodExercicio">@item.Descricao</a>
+    }
+</div>
+

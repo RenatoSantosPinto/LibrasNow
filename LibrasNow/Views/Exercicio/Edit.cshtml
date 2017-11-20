@@ -1,0 +1,116 @@
+﻿@model LibrasNow.ViewModels.Exercicio.ExercicioViewModel
+@section Scripts
+{
+    <script src="~/js/video.js"></script>
+}
+@{
+    ViewData["Title"] = "Alteração de Exercício";
+}
+
+<h2>Alterar Exercício</h2>
+
+<h4>Informe os dados do Exercício</h4>
+<hr />
+
+<form asp-action="Edit" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="col-md-offset-2 text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <input asp-for="Descricao" maxlength="40" class="form-control" id="descricaoTxt" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Alternativas</label>
+        <br />
+        <br />
+        <label class="col-md-2 control-label">1.</label>
+        <div class="col-md-10">
+            <input type="text" asp-for="Alternativa1"
+                   maxlength="40" class="form-control" id="alternativa1Txt" />
+        </div>
+        <br />
+        <br />
+        <label class="col-md-2 control-label">2.</label>
+        <div class="col-md-10">
+            <input type="text" asp-for="Alternativa2"
+                   maxlength="40" class="form-control" id="alternativa2Txt" />
+        </div>
+        <br />
+        <br />
+        <label class="col-md-2 control-label">3.</label>
+        <div class="col-md-10">
+            <input type="text" asp-for="Alternativa3"
+                   maxlength="40" class="form-control" id="alternativa3Txt" />
+        </div>
+        <br />
+        <br />
+        <label class="col-md-2 control-label">4.</label>
+        <div class="col-md-10">
+            <input type="text" asp-for="Alternativa4"
+                   maxlength="40" class="form-control" id="alternativa4Txt" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Resposta" class="col-md-2 control-label">Resposta</label>
+        <div class="col-md-3">
+            <select asp-for="Resposta" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo atual</label>
+        <div class="col-md-5">
+            <label class="control-label">@Model.DescVideo</label>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            <video width="320" height="240" preload="metadata" controls="controls" id="videoAtualTag"
+                   src="/Video/ShowVideo/@Model.CodVideo">
+                @*<source id="webmSrc" src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">*@
+            </video>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Vídeo novo</label>
+        <div class="col-md-5">
+            <select asp-for="CodVideo" class="form-control" id="videoSelectTag" onchange="changeVideo()">
+                @foreach (var video in Model.Videos)
+                {
+                    <option value=@video.CodVideo>@video.Descricao</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            <video width="320" height="240" preload="metadata" controls="controls" id="videoNovoTag"
+                   src="/Video/ShowVideo/@Model.CodVideo">
+                @*<source id="webmSrc" src="/Video/ShowVideo/@Model.CodVideo" type="video/webm">*@
+            </video>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Alterar" class="btn btn-primary" />
+            <a asp-action="Delete" asp-route-id="@Model.CodExercicio" class="btn btn-warning">Excluir</a>
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+
+</form>
+
+
+
+

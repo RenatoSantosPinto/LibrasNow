@@ -1,0 +1,51 @@
+﻿@model LibrasNow.Models.MaterialEstudo
+
+@{
+    ViewData["Title"] = "Alteração de Material de Estudo";
+}
+
+
+
+    <h2>Alterar Material de Estudo</h2>
+
+    <h4>Informe os dados do Material de Estudo</h4>
+    <hr />
+
+    <form asp-action="Edit" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Titulo" class="col-md-2 control-label">Título</label>
+        <div class="col-md-10">
+            <input asp-for="Titulo" maxlength="100" type="text" class="form-control" id="tituloTxt" placeholder="Título" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Descricao" class="col-md-2 control-label">Descrição</label>
+        <div class="col-md-10">
+            <textarea asp-for="Descricao" maxlength="1000" rows="9" class="form-control" id="descricaoTxt"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Link" class="col-md-2 control-label">Link</label>
+        <div class="col-md-10">
+            <input asp-for="Link" maxlength="100" type="text" class="form-control" id="linkTxt" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Alterar" class="btn btn-info" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+</form>
+
+

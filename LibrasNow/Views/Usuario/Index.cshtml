@@ -1,0 +1,27 @@
+
+@{
+    ViewData["Title"] = "Conta do usuário";
+}
+
+@{
+    if (User.IsInRole("Professor"))
+    {
+
+
+    }
+    else
+    {
+
+
+    }
+}
+
+<h2>Details</h2>
+<form method="post" action="">
+    Company Name:<br />
+    <input type="text" name="CompanyName" value="" /><br />
+    Contact Name:<br />
+    <input type="text" name="ContactName" value="" /><br /><br />
+    <input type="submit" value="Criar conta" class="submit" />
+</form>
+

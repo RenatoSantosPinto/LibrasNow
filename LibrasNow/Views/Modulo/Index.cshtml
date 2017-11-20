@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LibrasNow.ViewModels.Modulo.ModuloIndexViewModel>
+
+@{
+    ViewData["Title"] = "Módulos";
+}
+
+<h2>Módulos</h2>
+
+<p>
+    <a asp-action="Create">Cadastrar Módulo</a>
+</p>
+
+<hr />
+
+<div class="container">
+    @if (TempData["Mensagem"] != null)
+    {
+        if (TempData["Sucesso"].Equals(true))
+        {
+            <div class="alert alert-success">
+                @TempData["Mensagem"]
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                @TempData["Mensagem"]
+            </div>
+        }
+
+    }
+</div>
+
+<div class="container">
+    
+    @if (Model.Count() > 0)
+    {
+        var row = Model.ElementAt(0).Nivel;
+        int i;
+        @for (i = 0; i < Model.Count(); i++)
+        {
+            @if (row != Model.ElementAt(i).Nivel)
+            {
+                row = Model.ElementAt(i).Nivel;
+                <br />
+            }
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.ElementAt(i).CodModulo">
+                @*<img src="~/images/Question.jpg" width="50" height="70"/>*@
+                @Model.ElementAt(i).Titulo
+            </a>
+
+            
+        }
+    }
+    
+</div>
+
