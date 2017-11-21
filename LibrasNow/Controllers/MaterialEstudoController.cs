@@ -15,7 +15,6 @@ namespace LibrasNow.Controllers
     {
 
         private readonly LibrasNowDb dbContext;
-        private readonly ILogger _logger;
 
         public MaterialEstudoController(LibrasNowDb context)
         {

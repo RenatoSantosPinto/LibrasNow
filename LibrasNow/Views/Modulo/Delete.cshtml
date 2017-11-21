@@ -1,5 +1,74 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model LibrasNow.Models.Modulo
+
 @{
+    ViewData["Title"] = "Exclusão de Módulo";
 }
+
+
+<h2>Excluir Módulo</h2>
+<h4>Deseja realmente excluir esse módulo?</h4>
+<br />
+
+<form asp-action="Delete" class="form-horizontal">
+
+    @if (TempData["Mensagem"] != null)
+    {
+        <div class="col-md-offset-2 text-danger">
+            <ul><li>@TempData["Mensagem"]</li></ul>
+        </div>
+    }
+
+    <table class="table table-responsive">
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Título</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Titulo</span>
+            </td>
+        </tr>
+        @if(Model.Explicacao != null)
+        {
+            <tr>
+                <td style="vertical-align:middle">
+                    <label class="col-md-1 control-label">Explicação</label>
+                </td>
+                <td class="col-md-11" style="vertical-align:middle">
+                    <span>@Model.Explicacao</span>
+                </td>
+            </tr>
+        }        
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Nível</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.Nivel</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:middle">
+                <label class="col-md-1 control-label">Quantidade de Exercícios</label>
+            </td>
+            <td class="col-md-11" style="vertical-align:middle">
+                <span>@Model.QtdeExercicios</span>
+            </td>
+        </tr>        
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-10">
+            <input type="submit" value="Excluir" class="btn btn-warning" />
+            <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+        </div>
+    </div>
+
+
+</form>
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+CREATE TABLE [dbo].[MaterialEstudo] (
+    [CodMatEst] INT             IDENTITY (1, 1) NOT NULL,
+    [Titulo]    NVARCHAR (100)  NOT NULL,
+    [Descricao] NVARCHAR (1000) NOT NULL,
+    [Link]      NVARCHAR (100)  NULL,
+    [Ativo]     BIT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodMatEst] ASC)
+);
+
+CREATE TABLE [dbo].[Video] (
+    [CodVideo]  INT             IDENTITY (1, 1) NOT NULL,
+    [Descricao] NVARCHAR (40)   NOT NULL,
+    [Arquivo]   VARBINARY (MAX) NOT NULL,
+    [Tipo]      NVARCHAR (50)   NOT NULL,
+    [Ativo]     BIT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodVideo] ASC)
+);
+
+CREATE TABLE [dbo].[Termo] (
+    [CodTermo]   INT             IDENTITY (1, 1) NOT NULL,
+    [Descricao]  NVARCHAR (40)   NOT NULL,
+    [CodVideo]   INT             NOT NULL,
+    [Explicacao] NVARCHAR (1000) NULL,
+    [Ativo]      BIT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodTermo] ASC),
+    FOREIGN KEY ([CodVideo]) REFERENCES [dbo].[Video] ([CodVideo])
+);
+
+CREATE TABLE [dbo].[Exercicio] (
+    [CodExercicio] INT           IDENTITY (1, 1) NOT NULL,
+    [Descricao]    NVARCHAR (40) NOT NULL,
+    [CodVideo]     INT           NOT NULL,
+    [Resposta]     INT           NOT NULL,
+    [Ativo]        BIT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodExercicio] ASC),
+    FOREIGN KEY ([CodVideo]) REFERENCES [dbo].[Video] ([CodVideo])
+);
+CREATE TABLE [dbo].[Modulo] (
+    [CodModulo]      INT             IDENTITY (1, 1) NOT NULL,
+    [Titulo]         NVARCHAR (25)   NOT NULL,
+    [Imagem]         VARBINARY (MAX) NULL,
+    [Nivel]          INT             NOT NULL,
+    [Explicacao]     NVARCHAR (1000) NULL,
+    [QtdeExercicios] INT             NOT NULL,
+    [Ativo]          BIT             NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodModulo] ASC)
+);
+
+CREATE TABLE [dbo].[Usuario] (
+    [CodUsuario] INT           IDENTITY (1, 1) NOT NULL,
+    [Nome]       NVARCHAR (50) NOT NULL,
+    [Email]      NVARCHAR (50) NOT NULL,
+    [Login]      NVARCHAR (25) NOT NULL,
+    [Senha]      NVARCHAR (25) NOT NULL,
+    [Ativo]      BIT           NOT NULL,
+    [Nivel]      INT           NOT NULL,
+    [Tipo]       INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodUsuario] ASC)
+);
+
+
+CREATE TABLE [dbo].[ModuloResolvido] (
+    [CodModuloResolvido] INT IDENTITY (1, 1) NOT NULL,
+    [CodModulo]          INT NOT NULL,
+    [CodUsuario]         INT NOT NULL,
+    [Porcentagem]        INT NOT NULL,
+    [Ativo]              BIT NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodModuloResolvido] ASC),
+    FOREIGN KEY ([CodModulo]) REFERENCES [dbo].[Modulo] ([CodModulo]),
+    FOREIGN KEY ([CodUsuario]) REFERENCES [dbo].[Usuario] ([CodUsuario])
+);
+
+CREATE TABLE [dbo].[ExercicioModulo] (
+    [CodExercicioModulo] INT IDENTITY (1, 1) NOT NULL,
+    [CodExercicio]       INT NOT NULL,
+    [CodModulo]          INT NOT NULL,
+    [Ativo]              BIT NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodExercicioModulo] ASC),
+    FOREIGN KEY ([CodExercicio]) REFERENCES [dbo].[Exercicio] ([CodExercicio]),
+    FOREIGN KEY ([CodModulo]) REFERENCES [dbo].[Modulo] ([CodModulo])
+);
+
+CREATE TABLE [dbo].[Alternativa] (
+    [CodAlternativa] INT           NOT NULL,
+    [CodExercicio]   INT           NOT NULL,
+    [Descricao]      NVARCHAR (40) NOT NULL,
+    [Ativo]          BIT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([CodAlternativa] ASC, [CodExercicio] ASC),
+    FOREIGN KEY ([CodExercicio]) REFERENCES [dbo].[Exercicio] ([CodExercicio])
+);
+

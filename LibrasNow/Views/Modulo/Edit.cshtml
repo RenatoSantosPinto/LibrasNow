@@ -105,7 +105,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Alterar" class="btn btn-primary" />
-            <input type="submit" value="Excluir" class="btn btn-warning" />
+            <a asp-action="Delete" class="btn btn-warning" asp-route-id="@Model.CodModulo">Excluir</a>
             <a asp-action="Index" class="btn btn-danger">Cancelar</a>
         </div>
     </div>

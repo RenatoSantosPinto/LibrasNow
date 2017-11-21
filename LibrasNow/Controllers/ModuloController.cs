@@ -112,10 +112,10 @@ namespace LibrasNow.Controllers
 
                         if(modulo == null)
                         {
-                            IEnumerable<Modulo> modulosNivel = await dbContext.Modulos
-                                .Where(m => m.Nivel == mcevm.Nivel).ToListAsync();
+                            IEnumerable<Modulo> modulosNivel = await dbContext.Modulos.Where(m => m.Nivel
+                            == mcevm.Nivel && m.Ativo == true).ToListAsync();
 
-                            if (modulosNivel.Count() < 2)
+                            if (modulosNivel.Count() < 3)
                             {
                                 if (CodigosExerciciosModulo.Count() > 0)
                                 {
@@ -189,7 +189,7 @@ namespace LibrasNow.Controllers
             return View(mcevm);
         }
 
-        // GET: Modulo/Create
+        // GET: Modulo/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if(id == null)
@@ -244,7 +244,7 @@ namespace LibrasNow.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: Modulo/Create
+        // POST: Modulo/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, ModuloCreateEditViewModel mcevm, int[] CodigosExerciciosModulo)
@@ -265,10 +265,10 @@ namespace LibrasNow.Controllers
 
                         if (existModulo == null)
                         {
-                            IEnumerable<Modulo> modulosNivel = await dbContext.Modulos
-                                .Where(m => m.Nivel == mcevm.Nivel).ToListAsync();
+                            IEnumerable<Modulo> modulosNivel = await dbContext.Modulos.Where(m => m.Nivel == 
+                            mcevm.Nivel && m.Ativo == true).ToListAsync();
 
-                            if (modulosNivel.Count() < 2)
+                            if (modulosNivel.Count() < 3)
                             {
                                 if (CodigosExerciciosModulo.Count() > 0)
                                 {
@@ -361,27 +361,92 @@ namespace LibrasNow.Controllers
             return View(mcevm);
         }
 
-        // GET: Modulo/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
-        }
+            Modulo modulo = null;
 
-        // POST: Modulo/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             try
             {
-                // TODO: Add delete logic here
+                modulo = await dbContext.Modulos.Where(m => m.CodModulo == id
+                && m.Ativo == true).SingleOrDefaultAsync();
 
-                return RedirectToAction("Index");
+                if (modulo == null)
+                {
+                    return NotFound();
+                }
+
+                return View(modulo);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["Mensagem"] = "Erro ao excluir módulo!";
+                TempData["Exception"] = ex;
+                TempData["Sucesso"] = false;
             }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            using (await dbContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    Modulo modulo = await dbContext.Modulos.Where(m => m.CodModulo == id
+                    && m.Ativo == true).SingleOrDefaultAsync();                    
+
+                    if (modulo == null)
+                    {
+                        return NotFound();
+                    }
+
+                    List<ModuloResolvido> modResList = await dbContext.ModulosResolvidos
+                        .Where(mr => mr.CodModulo == modulo.CodModulo && mr.Ativo == true).ToListAsync();
+
+                    foreach(ModuloResolvido modRes in modResList)
+                    {
+                        modRes.Ativo = false;
+                        dbContext.Update(modRes);
+                    }
+
+                    modulo.Ativo = false;
+                    dbContext.Update(modulo);
+                    await dbContext.SaveChangesAsync();
+                    if (dbContext.Database.CurrentTransaction != null)
+                    {
+                        dbContext.Database.CommitTransaction();
+                    }
+                    TempData["Mensagem"] = "Módulo excluído com sucesso!";
+                    TempData["Sucesso"] = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["Mensagem"] = "Erro ao excluir módulo!";
+                    TempData["Exception"] = ex;
+                    TempData["Sucesso"] = false;
+                    if (dbContext.Database.CurrentTransaction != null)
+                    {
+                        dbContext.Database.RollbackTransaction();
+                    }
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
